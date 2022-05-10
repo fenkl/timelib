@@ -89,9 +89,6 @@ int get_days_for_month(int monat, int jahr)
     {
         return monatstage[monat-1];
     }
-
-
-
 }
 
 /**
@@ -100,7 +97,8 @@ int get_days_for_month(int monat, int jahr)
  **/
 int day_of_the_year(int day, int month, int year)
 {
-    int jahr, monat, tag, rest, schalt;
+    int jahr, monat, tag, rest, schalt, gueltige_angabe;
+
     printf("Dies ist ein Rechner fuer die Zahl des Tages!\n");
     printf("Bitte Jahr angeben:\n");
     scanf("%i",&jahr);
@@ -116,18 +114,39 @@ int day_of_the_year(int day, int month, int year)
     if (schalt == 1)
     {
         printf("Hinweis: Angegebenes Jahr ist ein Schaltjahr.\n");
-        anzahl[1] =29;
+        anzahl[1] = 29;
     }
 
-    do{
-      printf("Bitte Monat angeben:\n");
-      scanf("%i",&monat);}
-    while(monat<=0 || monat>12 );
+    gueltige_angabe = 0;
+    while(gueltige_angabe == 0)
+    {
+        printf("Bitte Monat angeben:\n");
+        scanf("%i",&monat);
+        if (monat >= 1 && monat <= 12)
+        {
+            gueltige_angabe = 1;
+        }
+        else
+        {
+            printf("Monatsangabe muss zwischen 1 und 12 liegen.\n");
+        }
+    }
 
-    do{
-      printf("Bitte Tag angeben:\n");
-      scanf("%i",&tag);}
-    while(tag> anzahl[monat-1] || tag<=0);
+    gueltige_angabe = 0;
+    while (gueltige_angabe == 0)
+    {
+        printf("Bitte Tag angeben:\n");
+        scanf("%i",&tag);
+        if (tag >= 0 && tag <= anzahl[monat -1])
+        {
+            gueltige_angabe = 1;
+        }
+        else
+        {
+            printf("Angabe liegt ausserhalb des Bereiches.\n");
+        }
+
+    }
 
     int ergebnis = 0;
 
@@ -146,6 +165,12 @@ int day_of_the_year(int day, int month, int year)
 
 int main()
 {
-    printf("Tag des Jahres: %i\n", day_of_the_year(31, 12, 2018));
+    int ergebnis;
+    //Aufruf day_of_the_year
+    ergebnis = day_of_the_year( 31, 12, 2018);
+    if (ergebnis != 0)
+    {
+        printf("Tag des Jahres: %i\n", day_of_the_year(31, 12, 2018));
+    }
     return 0;
 }
