@@ -8,14 +8,34 @@
 #include <stdlib.h>
 
 
+/**
+ * Funktion überprüft Gültigkeit des Datums, gibt eine Eins bei Gültigkeit zurück
+ * eine Null bei Ungültigkeit.
+ * @param: tag, monat, jahr
+**/
+int exists_date(int tag, int monat, int jahr)
+{
+    int date_exists;
+    if (jahr >= 1582 && jahr <= 2400)
+    {
+        date_exists = 1;
+        return date_exists;
+    }
+    else
+    {
+        date_exists = 0;
+        return date_exists;
+    }
+}
 
+
+/**
+ * @ param jahr
+ * Rückgabewert, Schlatjahr True, False
+**/
 int is_leap_year(int jahr)
 {
-    if (jahr < 1582)
-    {
-        return -1
-    } 
-    int schalt, rest
+    int schalt, rest;
     rest = jahr % 4;
     if (rest == 0)
     {
@@ -43,8 +63,32 @@ int is_leap_year(int jahr)
     }
 
     return schalt;
+}
 
 
+/**
+ * Funktion gibt die anzahl der Tage innerhalb eines angegebenen Monats zurück
+ * Schaltjahre werden berücksichtigt.
+ * @param: monat, jahr
+**/
+int get_days_for_month(int monat, int jahr)
+{
+    int monatstage[12]= {31,28,31,30,31,30,31,31,30,31,30,31};
+    if (monat == 2)
+    {
+        if (is_leap_year(jahr))
+        {
+            return 29;
+        }
+        else
+        {
+            return monatstage[1];
+        }
+    }
+    else
+    {
+        return monatstage[monat-1];
+    }
 
 
 
@@ -57,20 +101,22 @@ int is_leap_year(int jahr)
 int day_of_the_year(int day, int month, int year)
 {
     int jahr, monat, tag, rest, schalt;
-    printf("Dies ist ein Rechner f�r die Zahl des Tages!\n");
+    printf("Dies ist ein Rechner fuer die Zahl des Tages!\n");
     printf("Bitte Jahr angeben:\n");
     scanf("%i",&jahr);
 
+    if (exists_date(tag, monat, jahr) == 0)
+    {
+        printf("Datum muss zwischen dem 1.1.1582 und dem 31.12.2400 liegen.");
+        return 0;
+    }
 
     int anzahl[12]= {31,28,31,30,31,30,31,31,30,31,30,31};
-    schalt = is_leap_year(jahr)
-    if (is_leap_year == 1)
+    schalt = is_leap_year(jahr);
+    if (schalt == 1)
     {
-       anzahl[1] =29;
-    }
-    else if (is_leap_year == -1)
-    {
-        printf("Jahresangabe muss nach 1582 sein.");
+        printf("Hinweis: Angegebenes Jahr ist ein Schaltjahr.\n");
+        anzahl[1] =29;
     }
 
     do{
@@ -91,7 +137,7 @@ int day_of_the_year(int day, int month, int year)
     }
     ergebnis+=tag;
 
-    printf("\n Der angegebene Tag ist der %i Tag des Jahres %i\n", ergebnis, jahr);
+    printf("\nDer angegebene Tag ist der %i Tag des Jahres %i\n", ergebnis, jahr);
 
 
     return 0;
