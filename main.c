@@ -7,19 +7,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-/**
- * Der Funktion werden Tag, Monat und Jahr übergeben.
- * Rückgabewert ist der Tag des jahres.
- **/
-int day_of_the_year(int day, int month, int year)
+
+
+int is_leap_year(int jahr)
 {
-    int jahr, monat, tag, rest, schalt;
-    printf("Dies ist ein Rechner f�r die Zahl des Tages!\n");
-    printf("Bitte Jahr angeben:\n");
-    scanf("%i",&jahr);
-
-
-    int anzahl[12]= {31,28,31,30,31,30,31,31,30,31,30,31};
+    if (jahr < 1582)
+    {
+        return -1
+    } 
+    int schalt, rest
     rest = jahr % 4;
     if (rest == 0)
     {
@@ -46,9 +42,35 @@ int day_of_the_year(int day, int month, int year)
        schalt=0;
     }
 
-    if (schalt == 1)
+    return schalt;
+
+
+
+
+
+}
+
+/**
+ * Der Funktion werden Tag, Monat und Jahr übergeben.
+ * Rückgabewert ist der Tag des jahres.
+ **/
+int day_of_the_year(int day, int month, int year)
+{
+    int jahr, monat, tag, rest, schalt;
+    printf("Dies ist ein Rechner f�r die Zahl des Tages!\n");
+    printf("Bitte Jahr angeben:\n");
+    scanf("%i",&jahr);
+
+
+    int anzahl[12]= {31,28,31,30,31,30,31,31,30,31,30,31};
+    schalt = is_leap_year(jahr)
+    if (is_leap_year == 1)
     {
        anzahl[1] =29;
+    }
+    else if (is_leap_year == -1)
+    {
+        printf("Jahresangabe muss nach 1582 sein.");
     }
 
     do{
