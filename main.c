@@ -1,6 +1,6 @@
 /**
  * Timelib
- *
+ * Author: Francisco Fenkl
  *
  **/
 
@@ -74,21 +74,30 @@ int is_leap_year(int jahr)
 int get_days_for_month(int monat, int jahr)
 {
     int monatstage[12]= {31,28,31,30,31,30,31,31,30,31,30,31};
-    if (monat == 2)
+
+    if (monat >= 1 && monat <= 12)
     {
-        if (is_leap_year(jahr))
+        if (monat == 2)
         {
-            return 29;
+            if (is_leap_year(jahr))
+            {
+                return 29;
+            }
+            else
+            {
+            return monatstage[1];
+            }
         }
         else
         {
-            return monatstage[1];
+            return monatstage[monat-1];
         }
     }
     else
     {
-        return monatstage[monat-1];
+        return -1;
     }
+
 }
 
 /**
@@ -122,7 +131,7 @@ int day_of_the_year(int day, int month, int year)
     {
         printf("Bitte Monat angeben:\n");
         scanf("%i",&monat);
-        if (monat >= 1 && monat <= 12)
+        if (get_days_for_month(monat, jahr) != -1)
         {
             gueltige_angabe = 1;
         }
@@ -143,7 +152,7 @@ int day_of_the_year(int day, int month, int year)
         }
         else
         {
-            printf("Angabe liegt ausserhalb des Bereiches.\n");
+            printf("Angabe liegt ausserhalb des gueltigen Bereiches.\n");
         }
 
     }
@@ -152,11 +161,11 @@ int day_of_the_year(int day, int month, int year)
 
     for (int i = 0; i< monat-1; i++)
     {
-    ergebnis+=anzahl[i];
+        ergebnis+=anzahl[i];
     }
     ergebnis+=tag;
 
-    printf("\nDer angegebene Tag ist der %i Tag des Jahres %i\n", ergebnis, jahr);
+    printf("\nDer %i.%i. ist der %i. Tag des Jahres %i\n.", tag, monat, ergebnis, jahr);
 
 
     return 0;
