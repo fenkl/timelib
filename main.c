@@ -12,6 +12,6 @@
 int main()
 {
     //Aufruf day_of_the_year
-    day_of_the_year( 31, 12, 2018);
+    day_of_the_year();
     return 0;
 }
